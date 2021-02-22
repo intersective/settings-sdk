@@ -12,15 +12,15 @@ export class Preferences {
     this.url = url ? url : 'https://preferences.practera.com/api';
   }
 
-  get(user: string) : Promise<any> {
-    return this.makeApiCall(user, 'GET');
+  get(uuid: string) : Promise<any> {
+    return this.makeApiCall(uuid, 'GET');
   }
 
-  save(user: string, preferences: any) : Promise<any> {
-    return this.makeApiCall(user, 'POST', preferences);
+  save(uuid: string, preferences: any) : Promise<any> {
+    return this.makeApiCall(uuid, 'POST', preferences);
   }
 
-  private createHeaders(user: string, method: 'GET' | 'POST') : AxiosRequestConfig {
+  private createHeaders(uuid: string, method: 'GET' | 'POST') : AxiosRequestConfig {
     return {
       url: this.url,
       method,
@@ -29,7 +29,7 @@ export class Preferences {
         service: this.service,
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        apikey: JWT.sign({ role: 'system', user }, this.privateKey, { algorithm: 'RS256' }),
+        apikey: JWT.sign({ role: 'system', user_uuid: uuid }, this.privateKey, { algorithm: 'RS256' }),
       },
     };
   }
