@@ -28,6 +28,6 @@ const client = new preference(
   service, // this will identify what public key to use to validate the token, the variable called ${service}_JWT will be used. The variable should contain a key called public and the public key as the value.
   url, // the URL of the preference API, leave empty for production
 );
-existingPreferences = client.get('uuid');
-client.save('uuid', preferences);
+existingPreferences = client.get('[uuid]');
+client.save('[uuid]', preferences);
 
