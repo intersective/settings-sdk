@@ -1,11 +1,11 @@
-# @practera/preference-sdk
+# @practera/settings-sdk
 
 Validates a JWT with a public key, parses the token and returns the contents.
 
 ## Install
 
 ```
-$ npm install @practera/preference-sdk
+$ npm install @practera/settings-sdk
 ```
 
 ## Usage
@@ -13,21 +13,21 @@ $ npm install @practera/preference-sdk
 ### setting up the client
 JavaScript:
 ```js
-const preference = require("@practera/preference-sdk");
+const settings = require("@practera/settings-sdk");
 ```
 
 TypeScript:
 ```js
-import preference from "@practera/preference-sdk";
+import settings from "@practera/settings-sdk";
 ```
 
-### getting and setting preferences
+### getting and setting settings
 ```js
-const client = new preference(
+const client = new settings(
   privateKey, // the private key used to sign the request
   service, // this will identify what public key to use to validate the token, the variable called ${service}_JWT will be used. The variable should contain a key called public and the public key as the value.
-  url, // the URL of the preference API, leave empty for production
+  url, // the URL of the settings API, leave empty for production
 );
-existingPreferences = client.get('[uuid]');
-client.save('[uuid]', preferences);
+existingSettings = client.get('[uuid]');
+client.save('[uuid]', settings);
 

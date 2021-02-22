@@ -1,15 +1,15 @@
 {
-  "name": "@practera/preference-sdk",
+  "name": "@practera/settings-sdk",
   "version": "0.0.1",
-  "description": "Verifies using public keys and parses a JWT",
+  "description": "Facilitates the communication with the Practera settings API",
   "license": "MIT",
-  "repository": "intersective/preference-sdk",
+  "repository": "intersective/settings-sdk",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "keywords": [
     "practera",
     "intersective",
-    "jwt"
+    "api"
   ],
   "files": [
     "lib/**/*"

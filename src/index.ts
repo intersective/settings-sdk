@@ -1,7 +1,7 @@
 import Axios, { AxiosRequestConfig } from 'axios';
 import JWT from 'jsonwebtoken';
 
-export class Preferences {
+export class Settings {
   protected service: string;
   protected privateKey: string;
   protected url: string;
@@ -9,15 +9,15 @@ export class Preferences {
   constructor(privateKey: string, service: string, url?: string) {
     this.service = service;
     this.privateKey = privateKey;
-    this.url = url ? url : 'https://preferences.practera.com/api';
+    this.url = url ? url : 'https://settings.practera.com/api';
   }
 
   get(uuid: string) : Promise<any> {
     return this.makeApiCall(uuid, 'GET');
   }
 
-  save(uuid: string, preferences: any) : Promise<any> {
-    return this.makeApiCall(uuid, 'POST', preferences);
+  save(uuid: string, settings: any) : Promise<any> {
+    return this.makeApiCall(uuid, 'POST', settings);
   }
 
   private createHeaders(uuid: string, method: 'GET' | 'POST') : AxiosRequestConfig {
