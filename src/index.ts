@@ -29,7 +29,7 @@ export class Preferences {
         service: this.service,
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        apikey: JWT.sign({ role: 'system', user_uuid: uuid}, this.privateKey, { algorithm: 'RS256' }),
+        apikey: JWT.sign({ role: 'system', user_uuid: uuid }, this.privateKey, { algorithm: 'RS256' }),
       },
     };
   }
