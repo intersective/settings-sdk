@@ -1,4 +1,4 @@
-import { Preferences } from '../index';
+import { Settings } from '../index';
 jest.mock('https');
 const nock = require('nock');
 
@@ -30,8 +30,8 @@ const privateKey = '-----BEGIN RSA PRIVATE KEY-----\n' +
 'b2TCbujQ82PN8J2CBl9FGvTf/gt0UTKAEQrXZdiqH7YQWmg+WYSxcK0=\n' +
 '-----END RSA PRIVATE KEY-----';
 
-it('1. get the preferences of a user', async () => {
-  nock('https://preferences.practera.another')
+it('1. get the settings of a user', async () => {
+  nock('https://settings.practera.another')
     .get('/api')
     .reply(200, {
       code: 200,
@@ -40,7 +40,7 @@ it('1. get the preferences of a user', async () => {
         {
           name: 'Sample Notifications',
           order: 1,
-          preferences: [
+          settings: [
             {
               description: 'Sample notifications',
               key: 'sample-key',
@@ -68,21 +68,21 @@ it('1. get the preferences of a user', async () => {
       ]
     })
   
-  const preferences = new Preferences(privateKey, 'NOTIFICATION', 'https://preferences.practera.another/api');
+  const settings = new Settings(privateKey, 'NOTIFICATION', 'https://settings.practera.another/api');
 
-  const response = await preferences.get('lala');
+  const response = await settings.get('lala');
   expect(response).toMatchSnapshot();
 });
 
-it('2. save the preferences of a user', async () => {
-  nock('https://preferences.practera.com')
+it('2. save the settings of a user', async () => {
+  nock('https://settings.practera.com')
     .post('/api')
     .reply(200, {
       code: 200,
       message: "success",
     });
   
-  const preferences = new Preferences(privateKey, 'NOTIFICATION');
-  const response = await preferences.save('lala', {value: 'blah'});
+  const settings = new Settings(privateKey, 'NOTIFICATION');
+  const response = await settings.save('lala', {value: 'blah'});
   expect(response).toMatchSnapshot();
 });

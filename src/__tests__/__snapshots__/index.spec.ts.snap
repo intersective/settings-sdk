@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`1. get the preferences of a user 1`] = `
+exports[`1. get the settings of a user 1`] = `
 Object {
   "categories": Array [
     Object {
       "name": "Sample Notifications",
       "order": 1,
-      "preferences": Array [
+      "settings": Array [
         Object {
           "description": "Sample notifications",
           "key": "sample-key",
@@ -37,7 +37,7 @@ Object {
 }
 `;
 
-exports[`2. save the preferences of a user 1`] = `
+exports[`2. save the settings of a user 1`] = `
 Object {
   "code": 200,
   "message": "success",
