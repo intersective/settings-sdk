@@ -17,7 +17,7 @@ Object {
               "locked_name": "",
               "medium": "email",
               "name": "Email",
-              "value": false,
+              "value": true,
             },
             Object {
               "locked": false,
@@ -43,3 +43,23 @@ Object {
   "message": "success",
 }
 `;
+
+exports[`3. test the findValue function 1`] = `true`;
+
+exports[`3. test the findValue function 2`] = `undefined`;
+
+exports[`3. test the findValue function 3`] = `"email"`;
+
+exports[`4. test the findNeighbor function 1`] = `false`;
+
+exports[`4. test the findNeighbor function 2`] = `true`;
+
+exports[`4. test the findNeighbor function 3`] = `true`;
+
+exports[`4. test the findNeighbor function 4`] = `undefined`;
+
+exports[`5. test the findSetting function 1`] = `true`;
+
+exports[`5. test the findSetting function 2`] = `false`;
+
+exports[`5. test the findSetting function 3`] = `undefined`;

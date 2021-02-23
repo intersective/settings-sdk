@@ -30,48 +30,50 @@ const privateKey = '-----BEGIN RSA PRIVATE KEY-----\n' +
 'b2TCbujQ82PN8J2CBl9FGvTf/gt0UTKAEQrXZdiqH7YQWmg+WYSxcK0=\n' +
 '-----END RSA PRIVATE KEY-----';
 
+const getResponse = {
+  code: 200,
+  message: "success",
+  categories: [
+    {
+      name: 'Sample Notifications',
+      order: 1,
+      settings: [
+        {
+          description: 'Sample notifications',
+          key: 'sample-key',
+          name: 'Notify me',
+          options: [
+            {
+              locked: false,
+              locked_name: '',
+              medium: 'email',
+              name: 'Email',
+              value: true
+            },
+            {
+              locked: false,
+              locked_name: '',
+              medium: 'sms',
+              name: 'SMS',
+              value: false
+            }
+          ],
+          remarks: 'sample remarks'
+        }
+      ]
+    }
+  ]
+};
+
 it('1. get the settings of a user', async () => {
   nock('https://settings.practera.another')
     .get('/api')
-    .reply(200, {
-      code: 200,
-      message: "success",
-      categories: [
-        {
-          name: 'Sample Notifications',
-          order: 1,
-          settings: [
-            {
-              description: 'Sample notifications',
-              key: 'sample-key',
-              name: 'Notify me',
-              options: [
-                {
-                  locked: false,
-                  locked_name: '',
-                  medium: 'email',
-                  name: 'Email',
-                  value: false
-                },
-                {
-                  locked: false,
-                  locked_name: '',
-                  medium: 'sms',
-                  name: 'SMS',
-                  value: false
-                }
-              ],
-              remarks: 'sample remarks'
-            }
-          ]
-        }
-      ]
-    })
+    .reply(200, getResponse)
   
   const settings = new Settings(privateKey, 'NOTIFICATION', 'https://settings.practera.another/api');
 
   const response = await settings.get('lala');
-  expect(response).toMatchSnapshot();
+  expect(response.data).toMatchSnapshot();
 });
 
 it('2. save the settings of a user', async () => {
@@ -85,4 +87,44 @@ it('2. save the settings of a user', async () => {
   const settings = new Settings(privateKey, 'NOTIFICATION');
   const response = await settings.save('lala', {value: 'blah'});
   expect(response).toMatchSnapshot();
+});
+
+it('3. test the findValue function', async () => {
+  nock('https://settings.practera.another')
+    .get('/api')
+    .reply(200, getResponse)
+  
+  const settings = new Settings(privateKey, 'NOTIFICATION', 'https://settings.practera.another/api');
+
+  const response = await settings.get('lala');
+  expect(response.findValue(/categories\.[0-9]\.settings\.[0-9]\.options\.[0-9]\.value/)).toMatchSnapshot();
+  expect(response.findValue(/blah/)).toMatchSnapshot();
+  expect(response.findValue(/^categories\.0\.settings\.0\.options\.[0-9]\.medium$/)).toMatchSnapshot();
+});
+
+it('4. test the findNeighbor function', async () => {
+  nock('https://settings.practera.another')
+    .get('/api')
+    .reply(200, getResponse)
+  
+  const settings = new Settings(privateKey, 'NOTIFICATION', 'https://settings.practera.another/api');
+
+  const response = await settings.get('lala');
+  expect(response.findNeighbor(/^categories\.[0-9]\.settings\.[0-9]\.options\.[0-9]\.medium$/, "sms", "value")).toMatchSnapshot();
+  expect(response.findNeighbor(/^categories\.[0-9]\.settings\.[0-9]\.options\.[0-9]\.medium$/, "email", "value")).toMatchSnapshot();
+  expect(response.findNeighbor(/^categories\.0\.settings\.0\.options\.[0-9]\.medium$/, "email", "value")).toMatchSnapshot();
+  expect(response.findNeighbor(/blah/, "email", "value")).toMatchSnapshot();
+});
+
+it('5. test the findSetting function', async () => {
+  nock('https://settings.practera.another')
+    .get('/api')
+    .reply(200, getResponse)
+  
+  const settings = new Settings(privateKey, 'NOTIFICATION', 'https://settings.practera.another/api');
+
+  const response = await settings.get('lala');
+  expect(response.findSetting('sample-key', 'email')).toMatchSnapshot();
+  expect(response.findSetting('sample-key', 'sms')).toMatchSnapshot();
+  expect(response.findSetting('blah-key', 'wow')).toMatchSnapshot();
 });
