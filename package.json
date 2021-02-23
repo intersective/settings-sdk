@@ -1,6 +1,6 @@
 {
   "name": "@practera/settings-sdk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Facilitates the communication with the Practera settings API",
   "license": "MIT",
   "repository": "intersective/settings-sdk",
@@ -27,9 +27,11 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "flat": "^5.0.2",
     "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
+    "@types/flat": "^5.0.1",
     "@types/jest": "^26.0.20",
     "@types/jsonwebtoken": "^8.5.0",
     "jest": "^26.6.3",
