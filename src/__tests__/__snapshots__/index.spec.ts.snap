@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`1. get the settings of a user 1`] = `
+Object {
+  "categories": Array [
+    Object {
+      "name": "Sample Notifications",
+      "order": 1,
+      "settings": Array [
+        Object {
+          "description": "Sample notifications",
+          "key": "sample-key",
+          "name": "Notify me",
+          "options": Array [
+            Object {
+              "locked": false,
+              "locked_name": "",
+              "medium": "email",
+              "name": "Email",
+              "value": false,
+            },
+            Object {
+              "locked": false,
+              "locked_name": "",
+              "medium": "sms",
+              "name": "SMS",
+              "value": false,
+            },
+          ],
+          "remarks": "sample remarks",
+        },
+      ],
+    },
+  ],
+  "code": 200,
+  "message": "success",
+}
+`;
+
+exports[`2. save the settings of a user 1`] = `
+Object {
+  "code": 200,
+  "message": "success",
+}
+`;
