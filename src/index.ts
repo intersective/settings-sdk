@@ -57,7 +57,7 @@ export class Settings {
     if (typeof flatSettings === 'object' && flatSettings != null) {
       for (const property in flatSettings) {
         if (/^categories\.[0-9]\.settings\.[0-9]\.key$/.test(property) && (flatSettings as any)[property] === setting) {
-          const rootProperty = '^' + property.slice(0, property.lastIndexOf('.') + 1).replace(/\./g, '\\.') + 'options\\.[0-9]\\.medium$';
+          const rootProperty = `^${property.slice(0, property.lastIndexOf('.') + 1).replace(/\./g, '\\.')}options\\.[0-9]\\.medium$`;
           return this.findNeighbor(new RegExp(rootProperty, 'g'), medium, 'value');
         }
       }
