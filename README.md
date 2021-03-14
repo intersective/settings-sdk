@@ -23,12 +23,12 @@ $ npm install @practera/settings-sdk
 ### setting up the client
 JavaScript:
 ```js
-const settings = require("@practera/settings-sdk");
+const Settings = require("@practera/settings-sdk");
 ```
 
 TypeScript:
 ```js
-import settings from "@practera/settings-sdk";
+import { Settings } from "@practera/settings-sdk";
 ```
 
 ### Getting and setting settings
@@ -70,7 +70,7 @@ categories: [
 You can query the result in multiple ways.
 
 ```js
-const client = new settings(
+const client = new Settings(
   privateKey, // the private key used to sign the request
   service, // this will identify what public key to use to validate the token, the variable called ${service}_JWT will be used. The variable should contain a key called public and the public key as the value.
   url, // the URL of the settings API, leave empty for production
