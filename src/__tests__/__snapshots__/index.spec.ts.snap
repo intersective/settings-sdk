@@ -4,13 +4,13 @@ exports[`1. get the settings of a user 1`] = `
 Object {
   "categories": Array [
     Object {
-      "name": "Sample Notifications",
+      "name": "Chat Notifications",
       "order": 1,
-      "settings": Array [
+      "preferences": Array [
         Object {
-          "description": "Sample notifications",
-          "key": "sample-key",
-          "name": "Notify me",
+          "description": "When I receive chat messages",
+          "key": "best key",
+          "name": "Chat messages",
           "options": Array [
             Object {
               "locked": false,
@@ -27,7 +27,57 @@ Object {
               "value": false,
             },
           ],
-          "remarks": "sample remarks",
+          "remarks": "Chat messages can be muted from within individual chat channels",
+        },
+      ],
+    },
+    Object {
+      "name": "Team Changes Notifications",
+      "order": 1,
+      "preferences": Array [
+        Object {
+          "description": "How do you want to be told when a member was added to the team",
+          "key": "new_member_added",
+          "name": "When a member has been added to the team",
+          "options": Array [
+            Object {
+              "locked": false,
+              "locked_name": "",
+              "medium": "email",
+              "name": "Email",
+              "value": true,
+            },
+            Object {
+              "locked": false,
+              "locked_name": "",
+              "medium": "sms",
+              "name": "SMS",
+              "value": false,
+            },
+          ],
+          "remarks": "",
+        },
+        Object {
+          "description": "How do you want to be told when a member was removed from the team",
+          "key": "member_removed",
+          "name": "When a member has been removed",
+          "options": Array [
+            Object {
+              "locked": false,
+              "locked_name": "",
+              "medium": "email",
+              "name": "Email",
+              "value": true,
+            },
+            Object {
+              "locked": false,
+              "locked_name": "",
+              "medium": "sms",
+              "name": "SMS",
+              "value": false,
+            },
+          ],
+          "remarks": "",
         },
       ],
     },

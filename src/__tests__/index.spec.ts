@@ -1,5 +1,4 @@
 import { Settings } from '../index';
-jest.mock('https');
 const nock = require('nock');
 
 const privateKey = '-----BEGIN RSA PRIVATE KEY-----\n' +
@@ -31,36 +30,86 @@ const privateKey = '-----BEGIN RSA PRIVATE KEY-----\n' +
 '-----END RSA PRIVATE KEY-----';
 
 const getResponse = {
-  code: 200,
-  message: "success",
-  categories: [
+  "code": 200,
+  "message": "success",
+  "categories": [
     {
-      name: 'Sample Notifications',
-      order: 1,
-      settings: [
+      "name": "Chat Notifications",
+      "preferences": [
         {
-          description: 'Sample notifications',
-          key: 'sample-key',
-          name: 'Notify me',
-          options: [
+          "name": "Chat messages",
+          "options": [
             {
-              locked: false,
-              locked_name: '',
-              medium: 'email',
-              name: 'Email',
-              value: true
+              "name": "Email",
+              "locked_name": "",
+              "medium": "email",
+              "locked": false,
+              "value": true
             },
             {
-              locked: false,
-              locked_name: '',
-              medium: 'sms',
-              name: 'SMS',
-              value: false
+              "name": "SMS",
+              "locked_name": "",
+              "medium": "sms",
+              "locked": false,
+              "value": false
             }
           ],
-          remarks: 'sample remarks'
+          "description": "When I receive chat messages",
+          "key": "best key",
+          "remarks": "Chat messages can be muted from within individual chat channels"
         }
-      ]
+      ],
+      "order": 1
+    },
+    {
+      "name": "Team Changes Notifications",
+      "preferences": [
+        {
+          "name": "When a member has been added to the team",
+          "options": [
+            {
+              "name": "Email",
+              "locked_name": "",
+              "medium": "email",
+              "locked": false,
+              "value": true
+            },
+            {
+              "name": "SMS",
+              "locked_name": "",
+              "medium": "sms",
+              "locked": false,
+              "value": false
+            }
+          ],
+          "description": "How do you want to be told when a member was added to the team",
+          "key": "new_member_added",
+          "remarks": ""
+        },
+        {
+          "name": "When a member has been removed",
+          "options": [
+            {
+              "name": "Email",
+              "locked_name": "",
+              "medium": "email",
+              "locked": false,
+              "value": true
+            },
+            {
+              "name": "SMS",
+              "locked_name": "",
+              "medium": "sms",
+              "locked": false,
+              "value": false
+            }
+          ],
+          "description": "How do you want to be told when a member was removed from the team",
+          "key": "member_removed",
+          "remarks": ""
+        }
+      ],
+      "order": 1
     }
   ]
 };
@@ -97,9 +146,9 @@ it('3. test the findValue function', async () => {
   const settings = new Settings(privateKey, 'NOTIFICATION', 'https://settings.practera.another/api');
 
   const response = await settings.get('lala');
-  expect(response.findValue(/categories\.[0-9]\.settings\.[0-9]\.options\.[0-9]\.value/)).toMatchSnapshot();
+  expect(response.findValue(/categories\.[0-9]\.preferences\.[0-9]\.options\.[0-9]\.value/)).toMatchSnapshot();
   expect(response.findValue(/blah/)).toMatchSnapshot();
-  expect(response.findValue(/^categories\.0\.settings\.0\.options\.[0-9]\.medium$/)).toMatchSnapshot();
+  expect(response.findValue(/^categories\.0\.preferences\.0\.options\.[0-9]\.medium$/)).toMatchSnapshot();
 });
 
 it('4. test the findNeighbor function', async () => {
@@ -110,9 +159,9 @@ it('4. test the findNeighbor function', async () => {
   const settings = new Settings(privateKey, 'NOTIFICATION', 'https://settings.practera.another/api');
 
   const response = await settings.get('lala');
-  expect(response.findNeighbor(/^categories\.[0-9]\.settings\.[0-9]\.options\.[0-9]\.medium$/, "sms", "value")).toMatchSnapshot();
-  expect(response.findNeighbor(/^categories\.[0-9]\.settings\.[0-9]\.options\.[0-9]\.medium$/, "email", "value")).toMatchSnapshot();
-  expect(response.findNeighbor(/^categories\.0\.settings\.0\.options\.[0-9]\.medium$/, "email", "value")).toMatchSnapshot();
+  expect(response.findNeighbor(/^categories\.[0-9]\.preferences\.[0-9]\.options\.[0-9]\.medium$/, "sms", "value")).toMatchSnapshot();
+  expect(response.findNeighbor(/^categories\.[0-9]\.preferences\.[0-9]\.options\.[0-9]\.medium$/, "email", "value")).toMatchSnapshot();
+  expect(response.findNeighbor(/^categories\.0\.preferences\.0\.options\.[0-9]\.medium$/, "email", "value")).toMatchSnapshot();
   expect(response.findNeighbor(/blah/, "email", "value")).toMatchSnapshot();
 });
 
@@ -124,7 +173,7 @@ it('5. test the findSetting function', async () => {
   const settings = new Settings(privateKey, 'NOTIFICATION', 'https://settings.practera.another/api');
 
   const response = await settings.get('lala');
-  expect(response.findSetting('sample-key', 'email')).toMatchSnapshot();
-  expect(response.findSetting('sample-key', 'sms')).toMatchSnapshot();
+  expect(response.findSetting('new_member_added', 'email')).toMatchSnapshot();
+  expect(response.findSetting('new_member_added', 'sms')).toMatchSnapshot();
   expect(response.findSetting('blah-key', 'wow')).toMatchSnapshot();
 });
