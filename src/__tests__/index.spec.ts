@@ -177,3 +177,12 @@ it('5. test the findSetting function', async () => {
   expect(response.findSetting('new_member_added', 'sms')).toMatchSnapshot();
   expect(response.findSetting('blah-key', 'wow')).toMatchSnapshot();
 });
+
+it('6. test the actual api call', async () => {
+  const settings = new Settings(privateKey, 'TEST', 'http://localhost:3000/local/preferences');
+
+  const response = await settings.get('lala');
+  expect(response.findSetting('new_member_added', 'email')).toMatchSnapshot();
+  expect(response.findSetting('new_member_added', 'sms')).toMatchSnapshot();
+  expect(response.findSetting('blah-key', 'wow')).toMatchSnapshot();
+});
