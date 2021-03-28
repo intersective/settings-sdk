@@ -57,12 +57,12 @@ jobs:
         with:
           repository: intersective/preferences-api
           path: preferences-api
-          ref: trunk
+          ref: feature/integration-testing
           token: ${{ secrets.PERSONAL_GIT_TOKEN }}
 
       # Install the API to run integration tests
       - name: Run integration tests
-        run: cd preferences-api; npm install; $(npm bin)/serverless offline start --stage local </dev/null &
+        run: cd preferences-api; npm install; cp env-example-local .env; $(npm bin)/serverless offline start --stage local </dev/null &
 
       # # Run lint test
       # - name: Run lint Test if present only
