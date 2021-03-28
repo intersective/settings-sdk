@@ -62,7 +62,7 @@ jobs:
 
       # Install the API to run integration tests
       - name: Run integration tests
-        run: cd preferences-api; npm install; (npm bin)/serverless offline start --stage local  </dev/null &
+        run: cd preferences-api; npm install; $(npm bin)/serverless offline start --stage local </dev/null &
 
       # # Run lint test
       # - name: Run lint Test if present only
