@@ -4,6 +4,7 @@ module.exports = {
   testEnvironment: 'node',
   collectCoverage: true,
   coverageReporters: ['lcov', 'text', 'html'],
+  testPathIgnorePatterns: ["preferences-api"],
   // testResultsProcessor: 'jest-sonar-reporter',
   collectCoverageFrom: [
     'src/**/*.ts',
