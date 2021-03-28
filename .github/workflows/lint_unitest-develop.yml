@@ -70,7 +70,7 @@ jobs:
 
       # Run unit test 
       - name: Run unit test if present only
-        run: cd ../; npm run test
+        run: npm run test
 
       # Run Sonarcloudscan
       - name: SonarCloud Scan
