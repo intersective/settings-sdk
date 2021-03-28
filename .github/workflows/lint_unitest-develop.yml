@@ -52,6 +52,10 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run:  npm install
       
+      # Install the API to run integration tests
+      - name: Install the API run integration tests
+        run:  git clone git@github.com:intersective/preferences-api.git; cd preferences-api; serverless offline start --stage local  </dev/null &
+
       # # Run lint test
       # - name: Run lint Test if present only
       #   run:  npm run lint
