@@ -57,7 +57,7 @@ jobs:
         with:
           repository: intersective/preferences-api
           path: preferences-api
-          ref: master
+          ref: trunk
           token: ${{ secrets.PERSONAL_GIT_TOKEN }}
 
       # Install the API to run integration tests
