@@ -1,6 +1,6 @@
 {
   "name": "@practera/settings-sdk",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Facilitates the communication with the Practera settings API",
   "license": "MIT",
   "repository": "intersective/settings-sdk",
