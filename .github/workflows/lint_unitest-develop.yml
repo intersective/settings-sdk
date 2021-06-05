@@ -52,13 +52,25 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run:  npm install
       
+      - name: Install the API run integration tests
+        uses: actions/checkout@v2
+        with:
+          repository: intersective/preferences-api
+          path: preferences-api
+          ref: feature/integration-testing
+          token: ${{ secrets.PERSONAL_GIT_TOKEN }}
+
+      # Install the API to run integration tests
+      - name: Run integration tests
+        run: cd preferences-api; npm install; cp env-example-local .env; $(npm bin)/serverless offline start --stage local </dev/null &
+
       # # Run lint test
       # - name: Run lint Test if present only
       #   run:  npm run lint
 
       # Run unit test 
       - name: Run unit test if present only
-        run:  npm run test
+        run: ls -la; npm run test
 
       # Run Sonarcloudscan
       - name: SonarCloud Scan

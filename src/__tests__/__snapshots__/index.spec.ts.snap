@@ -113,3 +113,9 @@ exports[`5. test the findSetting function 1`] = `true`;
 exports[`5. test the findSetting function 2`] = `false`;
 
 exports[`5. test the findSetting function 3`] = `undefined`;
+
+exports[`6. test the actual api call 1`] = `true`;
+
+exports[`6. test the actual api call 2`] = `false`;
+
+exports[`6. test the actual api call 3`] = `undefined`;
