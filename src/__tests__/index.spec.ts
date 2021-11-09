@@ -1,5 +1,5 @@
 import { Settings } from '../index';
-const nock = require('nock');
+import nock from 'nock';
 
 const privateKey = '-----BEGIN RSA PRIVATE KEY-----\n' +
 'MIIEpQIBAAKCAQEAwCtQ1cAYp7tNiA0SojsVgiO9DwsLhs5ZOEkKa72RFPBUS7fD\n' +
@@ -114,11 +114,13 @@ const getResponse = {
   ]
 };
 
+const DUMMY_URL = 'https://settings.practera.another';
+
 it('1. get the settings of a user', async () => {
-  nock('https://settings.practera.another')
+  nock(DUMMY_URL)
     .get('/api')
     .reply(200, getResponse)
-  
+
   const settings = new Settings(privateKey, 'NOTIFICATION', 'https://settings.practera.another/api');
 
   const response = await settings.get('lala');
@@ -132,17 +134,17 @@ it('2. save the settings of a user', async () => {
       code: 200,
       message: "success",
     });
-  
+
   const settings = new Settings(privateKey, 'NOTIFICATION');
   const response = await settings.save('lala', {value: 'blah'});
   expect(response).toMatchSnapshot();
 });
 
 it('3. test the findValue function', async () => {
-  nock('https://settings.practera.another')
+  nock(DUMMY_URL)
     .get('/api')
     .reply(200, getResponse)
-  
+
   const settings = new Settings(privateKey, 'NOTIFICATION', 'https://settings.practera.another/api');
 
   const response = await settings.get('lala');
@@ -152,10 +154,10 @@ it('3. test the findValue function', async () => {
 });
 
 it('4. test the findNeighbor function', async () => {
-  nock('https://settings.practera.another')
+  nock(DUMMY_URL)
     .get('/api')
     .reply(200, getResponse)
-  
+
   const settings = new Settings(privateKey, 'NOTIFICATION', 'https://settings.practera.another/api');
 
   const response = await settings.get('lala');
@@ -166,14 +168,51 @@ it('4. test the findNeighbor function', async () => {
 });
 
 it('5. test the findSetting function', async () => {
-  nock('https://settings.practera.another')
+  nock(DUMMY_URL)
     .get('/api')
     .reply(200, getResponse)
-  
+
   const settings = new Settings(privateKey, 'NOTIFICATION', 'https://settings.practera.another/api');
 
   const response = await settings.get('lala');
   expect(response.findSetting('new_member_added', 'email')).toMatchSnapshot();
   expect(response.findSetting('new_member_added', 'sms')).toMatchSnapshot();
   expect(response.findSetting('blah-key', 'wow')).toMatchSnapshot();
+});
+
+it('6. fail to save the settings of a user', async () => {
+  nock('https://settings.practera.com')
+    .post('/api')
+    .replyWithError({
+      code: 'AWFUL_ERROR',
+      message: 'something awful happened',
+    });
+
+  const settings = new Settings(privateKey, 'NOTIFICATION');
+  try {
+    const response = await settings.save('lala', { value: 'blah' });
+    expect(response).toBeNull();
+  } catch (err: any) {
+    expect(err.code).toBe('AWFUL_ERROR');
+    expect(err.message).toBe('something awful happened');
+  }
+});
+
+it('7. fail to get the settings of a user', async () => {
+  nock(DUMMY_URL)
+    .get('/api')
+    .replyWithError({
+      code: 'AWFUL_ERROR',
+      message: 'something awful happened',
+    });
+
+
+  const settings = new Settings(privateKey, 'NOTIFICATION', 'https://settings.practera.another/api');
+  try {
+    const response = await settings.get('lala');
+    expect(response).toBeNull();
+  } catch (err: any) {
+    expect(err.code).toBe('AWFUL_ERROR');
+    expect(err.message).toBe('something awful happened');
+  }
 });
