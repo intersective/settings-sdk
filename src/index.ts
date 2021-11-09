@@ -1,6 +1,7 @@
 import Axios, { AxiosRequestConfig } from 'axios';
 import JWT from 'jsonwebtoken';
 import { flatten } from 'flat';
+import logger from '@dazn/lambda-powertools-logger';
 
 export class Settings {
   protected service: string;
@@ -16,12 +17,8 @@ export class Settings {
   }
 
   async get(uuid: string) : Promise<any> {
-    try {
-      this.data = await this.makeApiCall(uuid, 'GET');
-      return this;
-    } catch (err) {
-      throw err;
-    }
+    this.data = await this.makeApiCall(uuid, 'GET');
+    return this;
   }
 
   save(uuid: string, settings: any) : Promise<any> {
@@ -93,6 +90,7 @@ export class Settings {
       response = await Axios.post(this.url, data, headers);
       return response.data;
     } catch (err) {
+      logger.error('SettingSDK', { err });
       throw err;
     }
   }
