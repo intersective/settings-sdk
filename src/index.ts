@@ -1,6 +1,7 @@
 import Axios, { AxiosRequestConfig } from 'axios';
 import JWT from 'jsonwebtoken';
 import { flatten } from 'flat';
+import logger from '@dazn/lambda-powertools-logger';
 
 export class Settings {
   protected service: string;
@@ -77,19 +78,20 @@ export class Settings {
     };
   }
 
-  private makeApiCall(user: string, method: 'GET' | 'POST', data?: {}) : Promise<any> {
+  private async makeApiCall(user: string, method: 'GET' | 'POST', data?: {}) : Promise<any> {
     const headers = this.createHeaders(user);
 
-    return new Promise(resolve => {
+    try {
+      let response;
       if (method === 'GET') {
-        Axios.get(this.url, headers).then(response => {
-          resolve(response.data);
-        });
-      } else {
-        Axios.post(this.url, data, headers).then(response => {
-          resolve(response.data);
-        });
+        response = await Axios.get(this.url, headers);
+        return response.data;
       }
-    });
+      response = await Axios.post(this.url, data, headers);
+      return response.data;
+    } catch (err) {
+      logger.error('SettingSDK', { err });
+      throw err;
+    }
   }
 }
